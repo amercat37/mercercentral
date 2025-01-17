@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  mc_web_dev:
+    build: ./app
+    command: python manage.py runserver 0.0.0.0:8000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mc-web-dev.rule=Host(`pricechecker-dev.mercer.dynu.net`)"
+      - "traefik.http.routers.mc-web-dev.entrypoints=websecure"
+      - "traefik.http.routers.mc-web-dev.tls=true"
+      - "traefik.http.routers.mc-web-dev.service=mc-web-dev"
+      - "traefik.http.services.mc-web-dev.loadbalancer.server.port=8000"
+      - "traefik.http.services.mc-web-dev.loadbalancer.server.scheme=http"
+      #- "traefik.backend.loadbalancer.sticky=true"
+    volumes:
+      - ./app/:/usr/src/app/
+    expose:
+      - 8000
+    env_file:
+      - ./.env.dev
+    networks:
+      mc_dev:
+      proxy:
+        aliases:
+          - mc_web_dev
+    depends_on:
+      - mc_db_dev
+  mc_db_dev:
+    ### POSTGRES ###
+    #image: postgres:17-alpine3.21
+    ###
+    ### MYSQL ###
+    image: mysql:9.1.0-oraclelinux9
+    ###
+    volumes:
+      ### POSTGRES ###
+      #- /mount/docker-01/volumes/mercercentral/db_dev/data:/var/lib/postgresql/data/
+      ###
+      ### MYSQL ###
+      - /mount/docker-01/volumes/mercercentral/db_dev/data:/var/lib/mysql
+      ###
+    env_file:
+      - ./.env.dev.db
+    networks:
+      mc_dev:
+  mc_sqladmin_dev:
+    ### POSTGRES ###
+    #image: dpage/pgadmin4:8.14.0
+    ###
+    ### MYSQL ###
+    image: phpmyadmin:5.2.1-apache
+    ###
+    hostname: mc_sqladmin_dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mc-sqladmin-dev.rule=Host(`pricechecker-devsql.mercer.dynu.net`)"
+      - "traefik.http.routers.mc-sqladmin-dev.entrypoints=websecure"
+      - "traefik.http.routers.mc-sqladmin-dev.tls=true"
+      - "traefik.http.routers.mc-sqladmin-dev.service=mc-sqladmin-dev"
+      - "traefik.http.services.mc-sqladmin-dev.loadbalancer.server.port=80"
+      - "traefik.http.services.mc-sqladmin-dev.loadbalancer.server.scheme=http"
+      #- "traefik.backend.loadbalancer.sticky=true"
+    expose:
+      - 80
+    env_file:
+      - ./.env.dev.sqladmin
+    ### POSTGRES ###
+    #volumes:
+    #  - /mount/docker-01/volumes/mercercentral/sqladmin_dev:/var/lib/pgadmin
+    ###
+    networks:
+      mc_dev:
+      proxy:
+        aliases:
+          - mc_sqladmin_dev
+    depends_on:
+      - mc_db_dev
+
+networks:
+  mc_dev:
+  proxy:
+    external: true

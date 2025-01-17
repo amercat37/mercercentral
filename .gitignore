@@ -1,0 +1,8 @@
+/env
+/.env*
+#/.env.dev
+#/.env.dev.db
+#/.env.prod
+#/.env.prod.db
+#/.env.dev.sqladmin
+**/**/migrations

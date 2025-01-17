@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Food Category{% endblock title %}
+
+{% block content %}
+<div class="col-md-6 mb-4">
+  <span><a href="{% url 'price_checker:food_category_list' %}" class="btn btn-primary col-4">Back To List</a></span>
+</div>
+<div class="col-md-4 mb-4">
+  <!-- For better button spacing -->
+</div>
+<div class="col-md-2 mb-4 text-right">
+  <span class="text-right"><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-12">Main Menu</a></span>
+</div>
+<div class="col-md-12">
+  <form method="POST" class="post-form" action="{% url 'price_checker:food_category_update' food_category.id%}">
+    {% csrf_token %}
+    <div class="container">
+      <div class="col-12 text-center">
+        <h4>Update Details</h4>
+      </div>
+      <div class="mb-3">
+        <label>Category ID:</label>
+        <input type="text" class="form-control" name="id" id="id" required maxlength="50" value="{{ food_category.id }}" readonly/>
+      </div>
+      <div class="mb-3">
+        <label>Category Name:</label>
+        <input type="text" class="form-control" name="category" id="category" required maxlength="50" value="{{ food_category.category }}"/>
+      </div>
+      <div class="mb-3">
+        <label>Category Description:</label>
+        <input type="text" class="form-control" name="description" id="description" required maxlength="50" value="{{ food_category.description }}"/>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-success btn-lg">Update</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}

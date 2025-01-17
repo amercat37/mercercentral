@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  mc_web_prod:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+    command: gunicorn mercercentral.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - /mount/docker-01/volumes/mercercentral/static_volume_prod:/home/app/web/staticfiles
+    expose:
+      - 8000
+    env_file:
+      - ./.env.prod
+    networks:
+      mc_prod:
+    depends_on:
+      - mc_db_prod
+  mc_db_prod:
+    ### POSTGRES ###
+    #image: postgres:17-alpine3.21
+    ###
+    ### MYSQL ###
+    image: mysql:9.1.0-oraclelinux9
+    ###
+    volumes:
+      ### POSTGRES ###
+      #- /mount/docker-01/volumes/mercercentral/db_prod/data:/var/lib/postgresql/data/
+      ###
+      ### MYSQL ###
+      - /mount/docker-01/volumes/mercercentral/db_prod/data:/var/lib/mysql
+      ###
+    env_file:
+      - ./.env.prod.db
+    networks:
+      mc_prod:
+  mc_nginx:
+    build: ./nginx
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mc-nginx.rule=Host(`pricechecker.mercer.dynu.net`)"
+      - "traefik.http.routers.mc-nginx.entrypoints=websecure"
+      - "traefik.http.routers.mc-nginx.tls=true"
+      - "traefik.http.routers.mc-nginx.service=mc-nginx"
+      - "traefik.http.services.mc-nginx.loadbalancer.server.port=80"
+      - "traefik.http.services.mc-nginx.loadbalancer.server.scheme=http"
+      #- "traefik.backend.loadbalancer.sticky=true"
+    expose:
+      - 80
+    volumes:
+      - /mount/docker-01/volumes/mercercentral/static_volume_prod:/home/app/web/staticfiles
+    networks:
+      mc_prod:
+      proxy:
+        aliases:
+          - mc_nginx
+    depends_on:
+      - mc_web_prod
+
+networks:
+  mc_prod:
+  proxy:
+    external: true
