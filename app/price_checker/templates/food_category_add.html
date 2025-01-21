@@ -13,18 +13,19 @@
   <span class="text-right"><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-12">Main Menu</a></span>
 </div>
 <div class="col-md-12">
+  {% load widget_tweaks %}
   <form method="POST" class="post-form" action="{% url 'price_checker:food_category_add' %}">
     {% csrf_token %}
     <div class="container text-center">
       <h4>Add New Food Category</h4>
     </div>
     <div class="mb-4">
-      <label>Category Name</label>
-      {{ form.name }}
+      {{ form.name.label_tag }}
+      {% render_field form.name data-toggle="tooltip" title=form.name.help_text  %}
     </div>
     <div class="mb-4">
-      <label>Category Description</label>
-      {{ form.description }}
+      {{ form.description.label_tag }}
+      {% render_field form.description data-toggle="tooltip" title=form.description.help_text %}
     </div>
     <div class="mb-4">
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -33,4 +34,6 @@
 </div>
 {% load static %}
 <script src="{% static 'price_checker/js/set_focus_id_name_add.js' %}"></script>
+<script srv="load_tooltips.js{% static 'price_checker/js/load_tooltips.js' %}"></script>
 {% endblock content %}
+k

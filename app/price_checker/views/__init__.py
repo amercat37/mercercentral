@@ -1,0 +1,6 @@
+from .price_checker_project_views import IndexView
+from .food_category_views import FoodCategoryListView, FoodCategoryAddView, FoodCategoryEditView, FoodCategoryDeleteView
+from .country_views import CountryListView, CountryAddView, CountryEditView, CountryDeleteView
+from .grocery_store_views import GroceryStoreListView, GroceryStoreAddView, GroceryStoreEditView, GroceryStoreDeleteView
+from .food_subcategory_views import FoodSubcategoryListView, FoodSubcategoryAddView, FoodSubcategoryEditView, FoodSubcategoryDeleteView
+from .food_item_views import FoodItemListView, FoodItemAddView, FoodItemEditView, FoodItemDeleteView

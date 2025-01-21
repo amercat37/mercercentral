@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Edit Food Category{% endblock title %}
+{% block title %}Edit Grocery Store{% endblock title %}
 
 {% block content %}
 <div class="col-md-6 mb-4">
-  <span><a href="{% url 'price_checker:food_category_list' %}" class="btn btn-primary col-4">Back To List</a></span>
+  <span><a href="{% url 'price_checker:grocery_store_list' %}" class="btn btn-primary col-4">Back To List</a></span>
 </div>
 <div class="col-md-4 mb-4">
   <!-- For better button spacing -->
@@ -14,14 +14,24 @@
 </div>
 <div class="col-md-12">
   {% load widget_tweaks %}
-  <form method="POST" class="post-form" action="{% url 'price_checker:food_category_edit' food_category.id%}">
+  <form method="POST" class="post-form" action="{% url 'price_checker:grocery_store_edit' grocery_store.id%}">
     {% csrf_token %}
     <div class="container text-center">
-      <h4>Edit Food Category</h4>
+      <h4>Edit Grocery Store</h4>
     </div>
     <div class="mb-4">
       {{ form.name.label_tag }}
       {% render_field form.name data-toggle="tooltip" title=form.name.help_text  %}
+    </div>
+    <div class="mb-4">
+      {{ form.location.label_tag }}
+      {% render_field form.location data-toggle="tooltip" title=form.location.help_text %}
+    </div>
+    <div class="mb-4">
+      <label>Country</br>
+      {{ form.country }}
+      </label>
+    </div>
     </div>
     <div class="mb-4">
       {{ form.description.label_tag }}

@@ -13,15 +13,18 @@
   <span><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-2">Grocery Items</a></span>
 </div>
 <div class="mb-4 col-md-12 text-center">
-  <span><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-2">Food Items</a></span>
+  <span><a href="{% url 'price_checker:food_item_list' %}" class="btn btn-primary col-2">Food Items</a></span>
 </div>
 <div class="mb-4 col-md-12 text-center">
-  <span><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-2">Subcategories</a></span>
+  <span><a href="{% url 'price_checker:food_subcategory_list' %}" class="btn btn-primary col-2">Food Subcategories</a></span>
 </div>
 <div class="mb-4 col-md-12 text-center">
   <span><a href="{% url 'price_checker:food_category_list' %}" class="btn btn-primary col-2">Food Categories</a></span>
 </div>
 <div class="mb-4 col-md-12 text-center">
-  <span><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-2">Grocery Stores</a></span>
+  <span><a href="{% url 'price_checker:grocery_store_list' %}" class="btn btn-primary col-2">Grocery Stores</a></span>
+</div>
+<div class="mb-4 col-md-12 text-center">
+  <span><a href="{% url 'price_checker:country_list' %}" class="btn btn-primary col-2">Countries</a></span>
 </div>
 {% endblock content %}

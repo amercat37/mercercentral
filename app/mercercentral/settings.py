@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'price_checker.apps.PriceCheckerConfig',
 ]
+INSTALLED_APPS += [ 'widget_tweaks', ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

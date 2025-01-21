@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Grocery Stores{% endblock title %}
+
+{% block content %}
+<div class="col-md-6 mb-4">
+  <span><a href="{% url 'price_checker:grocery_store_add' %}" class="btn btn-primary col-4">Add New Store</a></span>
+</div>
+<div class="col-md-4 mb-4">
+  <!-- For better button spacing -->
+</div>
+<div class="col-md-2 mb-4 text-right">
+  <span class="text-right"><a href="{% url 'price_checker:index' %}" class="btn btn-primary col-12">Main Menu</a></span>
+</div>
+<div class="col-md-12 mb-4">
+  <div class="table-responsive">
+    <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+      <thead>
+        <!--<th><input type="checkbox" id="checkall" /></th>-->
+        <!--<th>ID</th>-->
+        <th>Grocery Store Name</th>
+        <th>Location</th>
+        <th>Country</th>
+        <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </thead>
+      <tbody>
+        {% for grocery_store in grocery_stores %}
+        <tr>
+          <!--<td><input type="checkbox" class="checkthis" /></td>-->
+          <!--<td>{{ grocery_store.id }}</td>-->
+          <td>{{ grocery_store.name }}</td>
+          <td>{{ grocery_store.location }}</td>
+          <td>{{ grocery_store.country }}</td>
+          <td>{{ grocery_store.description }}</td>
+          <!-- <td><a href="/price_checker/grocery_store_edit/{{ grocery_store.id }}" class="btn btn-primary">Edit</a></td> -->
+          <td><a href="{% url 'price_checker:grocery_store_edit' grocery_store.id %}" class="btn btn-primary">Edit</a></td>
+          <td><a href="{% url 'price_checker:grocery_store_delete' grocery_store.id %}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock content %}

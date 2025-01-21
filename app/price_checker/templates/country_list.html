@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Food Categories{% endblock title %}
+{% block title %}Countries{% endblock title %}
 
 {% block content %}
 <div class="col-md-6 mb-4">
-  <span><a href="{% url 'price_checker:food_category_add' %}" class="btn btn-primary col-4">Add New Category</a></span>
+  <span><a href="{% url 'price_checker:country_add' %}" class="btn btn-primary col-4">Add New Country</a></span>
 </div>
 <div class="col-md-4 mb-4">
   <!-- For better button spacing -->
@@ -18,21 +18,21 @@
       <thead>
         <!--<th><input type="checkbox" id="checkall" /></th>-->
         <!--<th>ID</th>-->
-        <th>Food Category Name</th>
-        <th>Description</th>
+        <th>Country Name</th>
+        <th>Default Exchange Rate</th>
         <th>Edit</th>
         <th>Delete</th>
       </thead>
       <tbody>
-        {% for food_category in food_categories %}
+        {% for country in countries %}
         <tr>
           <!--<td><input type="checkbox" class="checkthis" /></td>-->
-          <!--<td>{{ food_category.id }}</td>-->
-          <td>{{ food_category.name }}</td>
-          <td>{{ food_category.description }}</td>
-          <!-- <td><a href="/price_checker/food_category_edit/{{ food_category.id }}" class="btn btn-primary">Edit</a></td> -->
-          <td><a href="{% url 'price_checker:food_category_edit' food_category.id %}" class="btn btn-primary">Edit</a></td>
-          <td><a href="{% url 'price_checker:food_category_delete' food_category.id %}" class="btn btn-danger">Delete</a></td>
+          <!--<td>{{ country.id }}</td>-->
+          <td>{{ country.name }}</td>
+          <td>{{ country.default_exchange }}</td>
+          <!-- <td><a href="/price_checker/country_edit/{{ country.id }}" class="btn btn-primary">Edit</a></td> -->
+          <td><a href="{% url 'price_checker:country_edit' country.id %}" class="btn btn-primary">Edit</a></td>
+          <td><a href="{% url 'price_checker:country_delete' country.id %}" class="btn btn-danger">Delete</a></td>
         </tr>
         {% endfor %}
       </tbody>
